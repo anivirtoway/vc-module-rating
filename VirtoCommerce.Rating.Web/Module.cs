@@ -44,9 +44,9 @@ namespace VirtoCommerce.Rating.Web
 
             //Registering settings to store module allows to use individual values in each store
             var settingManager = _container.Resolve<ISettingsManager>();
-            var storeSettingsNames = new[] { "VirtoCommerce.Rating.RatingEnabled" };
-            var storeSettings = settingManager.GetModuleSettings("VirtoCommerce.Rating.Web").Where(x => storeSettingsNames.Contains(x.Name)).ToArray();
-            settingManager.RegisterModuleSettings("VirtoCommerce.Store", storeSettings);
+            var storeSettingsNames = new[] { "virtoCommerce.Rating.RatingEnabled" };
+            var storeSettings = settingManager.GetModuleSettings("virtoCommerce.Rating.Web").Where(x => storeSettingsNames.Contains(x.Name)).ToArray();
+            settingManager.RegisterModuleSettings("virtoCommerce.Store", storeSettings);
         }
     }
 }

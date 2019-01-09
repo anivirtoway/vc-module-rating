@@ -134,8 +134,10 @@
     <Content Include="Content\css\VirtoCommerce.Rating.css" />
     <Content Include="Scripts\blades\helloWorld_blade1.js" />
     <Content Include="Scripts\blades\helloWorld_blade1.tpl.html" />
-    <Content Include="Scripts\VirtoCommerce.Rating.js" />
-    <Content Include="Scripts\resources\VirtoCommerce.RatingApi.js" />
+    <Content Include="Scripts\virtoCommerce.Rating.js" />
+    <Content Include="Scripts\resources\virtoCommerce.RatingApi.js" />
+    <Content Include="Scripts\widgets\virtoCommerceRatingWidget.tpl.html" />
+    <Content Include="Scripts\widgets\virtoCommerceRatingWidget.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Api\VirtoCommerce.RatingController.cs" />

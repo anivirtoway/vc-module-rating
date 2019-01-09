@@ -1,4 +1,4 @@
-﻿angular.module('VirtoCommerce.Rating')
-.factory('VirtoCommerce.RatingApi', ['$resource', function ($resource) {
-    return $resource('api/VirtoCommerce.Rating');
+﻿angular.module('virtoCommerce.Rating')
+.factory('virtoCommerce.RatingApi', ['$resource', function ($resource) {
+    return $resource('api/virtoCommerce.Rating');
 }]);

@@ -5,7 +5,7 @@
     <platformVersion>2.13.9</platformVersion>
 
     <title>VirtoCommerce.Rating</title>
-    <description>Enter your module description here.</description>
+    <description>Rating module</description>
     <authors>
         <author>niksan321</author>
     </authors>

@@ -1,7 +1,7 @@
 ﻿//Call this to register our module to main application
-var moduleTemplateName = "VirtoCommerce.Rating";
+var moduleTemplateName = "virtoCommerce.Rating";
 
-if (AppDependencies != undefined) {
+if (AppDependencies !== undefined) {
     AppDependencies.push(moduleTemplateName);
 }
 
@@ -9,15 +9,15 @@ angular.module(moduleTemplateName, [])
 .config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('workspace.VirtoCommerce.Rating', {
-                url: '/VirtoCommerce.Rating',
+            .state('workspace.VirtoCommerceRating', {
+                url: '/virtoCommerce.Rating',
                 templateUrl: '$(Platform)/Scripts/common/templates/home.tpl.html',
                 controller: [
                     '$scope', 'platformWebApp.bladeNavigationService', function ($scope, bladeNavigationService) {
                         var newBlade = {
                             id: 'blade1',
-                            controller: 'VirtoCommerce.Rating.blade1Controller',
-                            template: 'Modules/$(VirtoCommerce.Rating)/Scripts/blades/helloWorld_blade1.tpl.html',
+                            controller: 'virtoCommerce.Rating.blade1Controller',
+                            template: 'Modules/$(virtoCommerce.Rating)/Scripts/blades/helloWorld_blade1.tpl.html',
                             isClosingDisabled: true
                         };
                         bladeNavigationService.showBlade(newBlade);
@@ -30,13 +30,20 @@ angular.module(moduleTemplateName, [])
     function ($rootScope, mainMenuService, widgetService, $state) {
         //Register module in main menu
         var menuItem = {
-            path: 'browse/VirtoCommerce.Rating',
+            path: 'browse/virtoCommerce.Rating',
             icon: 'fa fa-cube',
             title: 'VirtoCommerce.Rating',
             priority: 100,
-            action: function () { $state.go('workspace.VirtoCommerce.Rating') },
-            permission: 'VirtoCommerce.RatingPermission'
+            action: function () { $state.go('workspace.VirtoCommerceRating'); },
+            permission: 'rating:read'
         };
         mainMenuService.addMenuItem(menuItem);
+
+        //Register rating widget inside product blade
+        var ratingWidget = {
+            controller: 'virtoCommerce.Rating.ratingWidgetController',
+            template: 'modules/$(virtoCommerce.Rating)/scripts/widgets/virtoCommerceRatingWidget.tpl.html'
+        };
+        widgetService.registerWidget(ratingWidget, 'itemDetail');
     }
 ]);
