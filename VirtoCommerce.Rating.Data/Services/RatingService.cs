@@ -26,31 +26,32 @@ namespace VirtoCommerce.Rating.Data.Services
 
         public IList<IRatingCalculator> GetCalculators()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public float Get(string storeId, string productId)
+        public RatingDto Get(string storeId, string productId)
         {
             using (var repository = _repositoryFactory())
             {
-                return repository.Get(storeId, productId).Value;
+                var rating = repository.Get(storeId, productId);
+                return new RatingDto { Value = rating == null ? 0 : rating.Value };
             }
         }
 
-        public void Save(RatingDto[] ratingsDto)
+        public void Save(CreateRatingDto[] createRatingsDto)
         {
-            if (ratingsDto == null) throw new ArgumentNullException(nameof(ratingsDto));
+            if (createRatingsDto == null) throw new ArgumentNullException(nameof(createRatingsDto));
 
             var pkMap = new PrimaryKeyResolvingMap();
             using (var repository = _repositoryFactory())
             {
                 using (var changeTracker = GetChangeTracker(repository))
                 {
-                    var alreadyExistIds = ratingsDto.Where(x => x.IsTransient())
+                    var alreadyExistIds = createRatingsDto.Where(x => x.IsTransient())
                                      .Select(x => x.Id)
                                      .ToArray();
                     var alreadyExistEntities = repository.Get(alreadyExistIds);
-                    foreach (var rating in ratingsDto)
+                    foreach (var rating in createRatingsDto)
                     {
                         var source = AbstractTypeFactory<RatingEntity>.TryCreateInstance().FromModel(rating, pkMap);
                         var target = alreadyExistEntities.FirstOrDefault(x => x.Id == source.Id);
@@ -73,7 +74,7 @@ namespace VirtoCommerce.Rating.Data.Services
 
         public void RecalculateAll(string storeId, IRatingCalculator calculator)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

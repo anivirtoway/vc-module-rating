@@ -7,8 +7,8 @@ namespace VirtoCommerce.Rating.Core.Services
     {
         float Calculate(int[] ratings, IRatingCalculator calculator);
         IList<IRatingCalculator> GetCalculators();
-        float Get(string storeId, string productId);
-        void Save(RatingDto[] ratingsDto);
+        RatingDto Get(string storeId, string productId);
+        void Save(CreateRatingDto[] createRatingsDto);
         void RecalculateAll(string storeId, IRatingCalculator calculator);
     }
 }

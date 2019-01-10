@@ -9,7 +9,7 @@ namespace VirtoCommerce.Rating.Data.Models
         public string StoreId { get; set; }
         public float Value { get; set; }
 
-        public virtual Core.Models.RatingDto ToModel(Core.Models.RatingDto toModel)
+        public virtual Core.Models.CreateRatingDto ToModel(Core.Models.CreateRatingDto toModel)
         {
             if (toModel == null)
                 throw new ArgumentNullException(nameof(toModel));
@@ -26,7 +26,7 @@ namespace VirtoCommerce.Rating.Data.Models
             return toModel;
         }
 
-        public virtual RatingEntity FromModel(Core.Models.RatingDto fromModel, PrimaryKeyResolvingMap pkMap)
+        public virtual RatingEntity FromModel(Core.Models.CreateRatingDto fromModel, PrimaryKeyResolvingMap pkMap)
         {
             if (fromModel == null)
                 throw new ArgumentNullException(nameof(fromModel));

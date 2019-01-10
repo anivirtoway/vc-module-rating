@@ -9,9 +9,7 @@ namespace VirtoCommerce.Rating.Data.Repositories
 {
     public class RatingRepository : EFRepositoryBase, IRatingRepository
     {
-        public RatingRepository()
-        {
-        }
+        public RatingRepository() { }
 
         public RatingRepository(string nameOrConnectionString, params IInterceptor[] interceptors)
             : base(nameOrConnectionString, null, interceptors)

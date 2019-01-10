@@ -1,6 +1,7 @@
 ﻿using System.Web.Http;
 using System.Web.Http.Description;
 using VirtoCommerce.Platform.Core.Web.Security;
+using VirtoCommerce.Rating.Core.Models;
 using VirtoCommerce.Rating.Core.Services;
 using VirtoCommerce.Rating.Web.Security;
 
@@ -18,7 +19,7 @@ namespace VirtoCommerce.Rating.Web.Controllers.Api
 
         [HttpGet]
         [Route("")]
-        [ResponseType(typeof(float))]
+        [ResponseType(typeof(RatingDto))]
         [CheckPermission(Permission = PredefinedPermissions.RatingRead)]
         public IHttpActionResult Get(string storeId, string productId)
         {
