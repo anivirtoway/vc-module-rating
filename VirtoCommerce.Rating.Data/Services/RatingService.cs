@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Data.Infrastructure;
 using VirtoCommerce.Rating.Core.Models;
@@ -29,16 +30,31 @@ namespace VirtoCommerce.Rating.Data.Services
             throw new NotImplementedException();
         }
 
-        public RatingDto Get(string storeId, string productId)
+
+
+        public async Task<RatingDto> GetAsync(string storeId, string productId)
+        {
+            return (await GetAsync(storeId, new[] { productId })).FirstOrDefault();
+        }
+
+        public async Task<RatingDto[]> GetAsync(string storeId, string[] productIds)
         {
             using (var repository = _repositoryFactory())
             {
-                var rating = repository.Get(storeId, productId);
-                return new RatingDto { Value = rating == null ? 0 : rating.Value };
+                var ratings = await repository.GetAsync(storeId, productIds);
+                if (ratings.Any())
+                {
+                    return ratings.Select(x => new RatingDto
+                    {
+                        Value = x.Value,
+                        ProductId = x.ProductId
+                    }).ToArray();
+                }
             }
+            return new RatingDto[0];
         }
 
-        public void Save(CreateRatingDto[] createRatingsDto)
+        public async Task SaveAsync(CreateRatingDto[] createRatingsDto)
         {
             if (createRatingsDto == null) throw new ArgumentNullException(nameof(createRatingsDto));
 
@@ -50,7 +66,7 @@ namespace VirtoCommerce.Rating.Data.Services
                     var alreadyExistIds = createRatingsDto.Where(x => x.IsTransient())
                                      .Select(x => x.Id)
                                      .ToArray();
-                    var alreadyExistEntities = repository.Get(alreadyExistIds);
+                    var alreadyExistEntities = await repository.GetAsync(alreadyExistIds);
                     foreach (var rating in createRatingsDto)
                     {
                         var source = AbstractTypeFactory<RatingEntity>.TryCreateInstance().FromModel(rating, pkMap);

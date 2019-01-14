@@ -1,9 +1,8 @@
-﻿using VirtoCommerce.Platform.Core.Common;
-
-namespace VirtoCommerce.Rating.Core.Models
+﻿namespace VirtoCommerce.Rating.Core.Models
 {
-    public class RatingDto : AuditableEntity
+    public class RatingDto
     {
+        public string ProductId { get; set; }
         public float Value { get; set; }
     }
 }

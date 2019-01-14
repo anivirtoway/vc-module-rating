@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using VirtoCommerce.Platform.Data.Infrastructure;
 using VirtoCommerce.Platform.Data.Infrastructure.Interceptors;
 using VirtoCommerce.Rating.Data.Models;
@@ -19,21 +20,27 @@ namespace VirtoCommerce.Rating.Data.Repositories
 
         public IQueryable<RatingEntity> Ratings => GetAsQueryable<RatingEntity>();
 
-        public RatingEntity Get(string storeId, string productId)
+        public async Task<RatingEntity> GetAsync(string storeId, string productId)
         {
-            return Ratings.FirstOrDefault(x => x.StoreId == storeId && x.ProductId == productId);
+            return (await GetAsync(storeId, new[] { productId })).FirstOrDefault();
         }
 
-        public RatingEntity[] Get(string[] ids)
+        public async Task<RatingEntity[]> GetAsync(string storeId, string[] productIds)
+        {
+            return await Ratings.Where(x => x.StoreId == storeId && productIds.Contains(x.ProductId))
+                                .ToArrayAsync();
+        }
+
+        public async Task<RatingEntity[]> GetAsync(string[] ids)
         {
             return ids.Length > 0
-                ? Ratings.Where(x => ids.Contains(x.Id)).ToArray()
+                ? await Ratings.Where(x => ids.Contains(x.Id)).ToArrayAsync()
                 : new RatingEntity[0];
         }
 
-        public void Delete(string storeId, string productId)
+        public async Task DeleteAsync(string storeId, string productId)
         {
-            var rating = Get(storeId, productId);
+            var rating = await GetAsync(storeId, productId);
             Remove(rating);
         }
 

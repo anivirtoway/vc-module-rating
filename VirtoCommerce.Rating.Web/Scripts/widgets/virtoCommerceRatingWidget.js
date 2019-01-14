@@ -6,13 +6,14 @@
             $scope.loading = true;
 
             var params = {
-                productId: blade.itemId,
+                productIds: [blade.itemId],
                 storeId: blade.catalog.id
             };
 
             ratingApi.get(params, function (data) {
                 $scope.loading = false;
-                $scope.rating = data.value;
+                var hasRating = data.ratings[0] && data.ratings[0].value;
+                $scope.rating = hasRating ? data.ratings[0].value : 0;
             });
         }
 

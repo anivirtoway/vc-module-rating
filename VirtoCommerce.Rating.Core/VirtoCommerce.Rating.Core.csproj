@@ -50,6 +50,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\RatingListDto.cs" />
     <Compile Include="Models\RatingDto.cs" />
     <Compile Include="Models\RatingSearchCriteria.cs" />
     <Compile Include="Services\IRatingCalculator.cs" />

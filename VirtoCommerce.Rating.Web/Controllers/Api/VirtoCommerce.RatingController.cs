@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Threading.Tasks;
+using System.Web.Http;
 using System.Web.Http.Description;
 using VirtoCommerce.Platform.Core.Web.Security;
 using VirtoCommerce.Rating.Core.Models;
@@ -19,12 +20,24 @@ namespace VirtoCommerce.Rating.Web.Controllers.Api
 
         [HttpGet]
         [Route("")]
-        [ResponseType(typeof(RatingDto))]
+        [ResponseType(typeof(RatingListDto))]
         [CheckPermission(Permission = PredefinedPermissions.RatingRead)]
-        public IHttpActionResult Get(string storeId, string productId)
+        public async Task<IHttpActionResult> Get([FromUri]string storeId, [FromUri]string[] productIds)
         {
-            var rating = _ratingService.Get(storeId, productId);
-            return Ok(rating);
+            if (string.IsNullOrWhiteSpace(storeId) || productIds.Length == 0)
+            {
+                return Ok(new RatingListDto
+                {
+                    StoreId = storeId,
+                    Ratings = new RatingDto[0]
+                });
+            }
+            var result = new RatingListDto
+            {
+                StoreId = storeId,
+                Ratings = await _ratingService.GetAsync(storeId, productIds)
+            };
+            return Ok(result);
         }
     }
 }
