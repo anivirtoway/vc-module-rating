@@ -22,26 +22,22 @@ namespace VirtoCommerce.Rating.Data.Services
         private readonly Func<IRatingRepository> _repositoryFactory;
         private readonly IUnityContainer _container;
         private readonly IStoreService _storeService;
-        private readonly ICatalogService _catalogService;
         private readonly ICatalogSearchService _catalogSearchService;
 
         public RatingService(Func<IRatingRepository> repositoryFactory,
             IUnityContainer container,
             IStoreService storeService,
-            ICatalogService catalogService,
             ICatalogSearchService catalogCatalogSearchService)
         {
             _repositoryFactory = repositoryFactory;
             _container = container;
             _storeService = storeService;
-            _catalogService = catalogService;
             _catalogSearchService = catalogCatalogSearchService;
         }
 
         public RatingProductDto[] Calculate(string storeId, string[] productIds)
         {
             var calculator = GetCalculator(storeId, out var store);
-
             var allProductRatings = GetProductsReview(storeId, productIds);
 
             return allProductRatings.Select(productRatings => new RatingProductDto
@@ -105,24 +101,22 @@ namespace VirtoCommerce.Rating.Data.Services
             {
                 using (var changeTracker = GetChangeTracker(repository))
                 {
-                    var productIds = createRatingsDto
-                                     .Select(x => x.ProductId)
-                                     .ToArray();
+                    var productIds = createRatingsDto.Select(x => x.ProductId).ToArray();
                     var alreadyExistEntities = await repository.GetAsync(storeId, productIds);
                     foreach (var rating in createRatingsDto)
                     {
                         var source = AbstractTypeFactory<RatingEntity>.TryCreateInstance().FromModel(rating, pkMap);
                         var target = alreadyExistEntities.FirstOrDefault(x =>
-                            x.ProductId == source.ProductId
-                            && x.StoreId == storeId);
-                        if (target != null)
+                            x.ProductId == source.ProductId && x.StoreId == storeId);
+
+                        if (target == null)
                         {
-                            changeTracker.Attach(target);
-                            source.Patch(target);
+                            repository.Add(source);
                         }
                         else
                         {
-                            repository.Add(source);
+                            changeTracker.Attach(target);
+                            source.Patch(target);
                         }
                     }
 
@@ -148,9 +142,7 @@ namespace VirtoCommerce.Rating.Data.Services
                 });
 
                 var productIds = searchResult.Products.Select(x => x.Id).ToList();
-
                 var reviews = GetProductsReview(storeId, productIds);
-
                 var productsWithReview = searchResult.Products.Where(x => reviews.Any(y => y.Key == x.Id));
 
                 var ratingsToUpdate = productsWithReview.Select(x => new CreateRatingDto
@@ -197,16 +189,12 @@ namespace VirtoCommerce.Rating.Data.Services
             var result = new List<Store>();
             do
             {
-                var search = _storeService.SearchStores(new SearchCriteria
-                {
-                    Skip = skip
-                });
+                var search = _storeService.SearchStores(new SearchCriteria { Skip = skip });
                 var stores = search.Stores;
                 searchTotal = search.TotalCount;
                 skip += stores.Count;
 
-                var catalogStores = stores.Where(x => x.Catalog == catalogId)
-                                          .ToList();
+                var catalogStores = stores.Where(x => x.Catalog == catalogId).ToList();
                 if (catalogStores.Any())
                 {
                     result.AddRange(catalogStores);
