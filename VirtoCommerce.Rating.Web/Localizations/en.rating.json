@@ -1,9 +1,16 @@
 ﻿{
-    "rating": {
-        "widgets": {
-            "item-detail": {
-                "title": "Rating"
-            }
+  "rating": {
+    "widgets": {
+      "item-detail": {
+        "title": "Rating"
+      }
+    },
+    "blades": {
+      "store": {
+        "calculate-btn": {
+           "title": "Calculate"
         }
+      }
     }
+  }
 }

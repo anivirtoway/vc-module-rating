@@ -50,11 +50,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\RatingListDto.cs" />
-    <Compile Include="Models\RatingDto.cs" />
+    <Compile Include="Models\RatingStoreDto.cs" />
+    <Compile Include="Models\RatingCatalogListDto.cs" />
+    <Compile Include="Models\RatingStoreListDto.cs" />
+    <Compile Include="Models\RatingProductDto.cs" />
     <Compile Include="Models\RatingSearchCriteria.cs" />
     <Compile Include="Services\IRatingCalculator.cs" />
-    <Compile Include="Services\IRatingSearchService.cs" />
     <Compile Include="Services\IRatingService.cs" />
     <Compile Include="Models\CreateRatingDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

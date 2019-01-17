@@ -8,12 +8,12 @@ namespace VirtoCommerce.Rating.Data.Calculators
     /// </summary>
     public class AverageRatingCalculator : IRatingCalculator
     {
-        public string Name => "AverageRating";
+        public string Name => "Average";
 
-        public float Calculate(int[] ratings)
+        public float Calculate(int[] reviews)
         {
-            if (ratings.Length == 0) return 0;
-            return (float)ratings.Sum() / ratings.Length;
+            if (reviews.Length == 0) return 0;
+            return (float)reviews.Sum() / reviews.Length;
         }
     }
 }

@@ -51,23 +51,23 @@
                 <description>A decimal setting</description>
             </setting>
         </group>
-        <group name="Advanced">
+        <group name="Store">
             <setting>
-                <name>VirtoCommerce.Rating.Advanced.Boolean1</name>
+                <name>VirtoCommerce.Rating.Store.Boolean1</name>
                 <valueType>boolean</valueType>
                 <defaultValue>true</defaultValue>
                 <title>Boolean1</title>
                 <description>A boolean setting</description>
             </setting>
             <setting>
-                <name>VirtoCommerce.Rating.Advanced.Boolean2</name>
+                <name>VirtoCommerce.Rating.Store.Boolean2</name>
                 <valueType>boolean</valueType>
                 <defaultValue>false</defaultValue>
                 <title>Boolean2</title>
                 <description>A boolean setting</description>
             </setting>
             <setting>
-                <name>VirtoCommerce.Rating.Advanced.Select</name>
+                <name>VirtoCommerce.Rating.Store.Select</name>
                 <valueType>string</valueType>
                 <allowedValues>
                     <value>qwerty</value>

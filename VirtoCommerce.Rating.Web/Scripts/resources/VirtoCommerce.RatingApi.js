@@ -1,8 +1,8 @@
 ﻿angular.module('virtoCommerce.Rating')
 .factory('virtoCommerce.RatingApi', ['$resource', function ($resource) {
-    return $resource('api/rating/:action', {},
+    return $resource('api/rating', {},
         {
-            //search: { method: 'POST', action: 'search' }
-            get: { method: 'GET', action: '' }
+            calculateStore: { method: 'POST', url: 'api/rating/calculateStore' },
+            get: { method: 'GET' }
         });
 }]);

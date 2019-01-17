@@ -2,8 +2,7 @@
 {
     public interface IRatingCalculator
     {
-        // todo: make translation
         string Name { get; }
-        float Calculate(int[] ratings);
+        float Calculate(int[] reviews);
     }
 }

@@ -41,6 +41,7 @@ namespace VirtoCommerce.Rating.Data.Models
 
             StoreId = fromModel.StoreId;
             ProductId = fromModel.ProductId;
+            Value = fromModel.Value;
 
             return this;
         }
@@ -52,6 +53,7 @@ namespace VirtoCommerce.Rating.Data.Models
 
             target.StoreId = StoreId;
             target.ProductId = ProductId;
+            target.Value = Value;
         }
     }
 }

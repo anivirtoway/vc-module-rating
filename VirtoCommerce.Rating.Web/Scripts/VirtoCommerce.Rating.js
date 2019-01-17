@@ -41,9 +41,16 @@ angular.module(moduleTemplateName, [])
 
         //Register rating widget inside product blade
         var ratingWidget = {
-            controller: 'virtoCommerce.Rating.ratingWidgetController',
-            template: 'modules/$(virtoCommerce.Rating)/scripts/widgets/virtoCommerceRatingWidget.tpl.html'
+            controller: 'virtoCommerce.Rating.ratingProductWidgetController',
+            template: 'modules/$(virtoCommerce.Rating)/scripts/widgets/virtoCommerceRatingProductWidget.tpl.html'
         };
         widgetService.registerWidget(ratingWidget, 'itemDetail');
+
+        //Register rating widget inside store blade
+        var ratingStoreWidget = {
+            controller: 'virtoCommerce.Rating.ratingStoreWidgetController',
+            template: 'modules/$(virtoCommerce.Rating)/scripts/widgets/virtoCommerceRatingStoreWidget.tpl.html'
+        };
+        widgetService.registerWidget(ratingStoreWidget, 'storeDetail');
     }
 ]);

@@ -1,0 +1,34 @@
+﻿<div class="blade-content">
+    <div class="blade-inner">
+        <div class="inner-block">
+
+            <div class="sub-t"></div>
+
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="table-col">
+                                <span>Store</span>
+                            </th>
+
+                            <th class="table-col">
+                                <span>Rating</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-item" ng-repeat="rating in ratings track by rating.id">
+                            <td class="table-col">
+                                <span class="table-t">{{rating.storeName}}</span>
+                            </td>
+                            <td class="table-col">
+                                <span class="table-t">{{rating.value}}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
