@@ -14,7 +14,6 @@ using VirtoCommerce.Rating.Core.Services;
 using VirtoCommerce.Rating.Data.Models;
 using VirtoCommerce.Rating.Data.Repositories;
 
-
 namespace VirtoCommerce.Rating.Data.Services
 {
     public class RatingService : ServiceBase, IRatingService
@@ -27,17 +26,17 @@ namespace VirtoCommerce.Rating.Data.Services
         public RatingService(Func<IRatingRepository> repositoryFactory,
             IUnityContainer container,
             IStoreService storeService,
-            ICatalogSearchService catalogCatalogSearchService)
+            ICatalogSearchService catalogSearchService)
         {
             _repositoryFactory = repositoryFactory;
             _container = container;
             _storeService = storeService;
-            _catalogSearchService = catalogCatalogSearchService;
+            _catalogSearchService = catalogSearchService;
         }
 
         public RatingProductDto[] Calculate(string storeId, string[] productIds)
         {
-            var calculator = GetCalculator(storeId, out var store);
+            var calculator = GetCalculator(storeId);
             var allProductRatings = GetProductsReview(storeId, productIds);
 
             return allProductRatings.Select(productRatings => new RatingProductDto
@@ -128,7 +127,7 @@ namespace VirtoCommerce.Rating.Data.Services
 
         public async Task ReCalculateForStoreAsync(string storeId)
         {
-            var calculator = GetCalculator(storeId, out var store);
+            var calculator = GetCalculator(storeId);
 
             var productsCount = 0;
             var skip = 0;
@@ -160,9 +159,9 @@ namespace VirtoCommerce.Rating.Data.Services
             } while (productsCount > 0);
         }
 
-        private IRatingCalculator GetCalculator(string storeId, out Store store)
+        private IRatingCalculator GetCalculator(string storeId)
         {
-            store = _storeService.GetById(storeId);
+            var store = _storeService.GetById(storeId);
             if (store == null)
             {
                 throw new KeyNotFoundException($"Store not found, storeId: {storeId}");

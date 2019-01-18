@@ -41,7 +41,12 @@ namespace VirtoCommerce.Rating.Web
         {
             base.Initialize();
 
-            _container.RegisterType<IRatingRepository>(new InjectionFactory(c => new RatingRepository(_connectionString, new EntityPrimaryKeyGeneratorInterceptor(), _container.Resolve<AuditableInterceptor>())));
+            _container.RegisterType<IRatingRepository>(
+                new InjectionFactory(c => new RatingRepository(
+                        _connectionString,
+                        new EntityPrimaryKeyGeneratorInterceptor(),
+                        _container.Resolve<AuditableInterceptor>()))
+                    );
             _container.RegisterType<IRatingService, RatingService>();
             _container.RegisterType<IRatingCalculator, AverageRatingCalculator>(new AverageRatingCalculator().Name);
             _container.RegisterType<IRatingCalculator, WilsonRatingCalculator>(new WilsonRatingCalculator().Name);
